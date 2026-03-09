@@ -12,81 +12,13 @@ const ROOMS: Room[] = [
     devices: [
       {
         id: 'living-light-main',
-        name: '메인 조명',
+        name: 'LUMI-N 조명',
         type: 'light',
         isOn: false,
         brightness: 80,
-        entity_id: 'light.living_room_main', // TODO: 실제 ID로 교체
-      },
-      {
-        id: 'living-light-mood',
-        name: '무드등',
-        type: 'light',
-        isOn: false,
-        brightness: 40,
-        colorTemp: 300,
         supportsBrightness: true,
         supportsColor: true,
-        entity_id: 'light.living_room_mood', // TODO: 실제 ID로 교체
-      },
-      {
-        id: 'living-ac',
-        name: '에어컨',
-        type: 'climate',
-        isOn: false,
-        targetTemperature: 24,
-        entity_id: 'climate.living_room_ac', // TODO: 실제 ID로 교체
-      },
-      {
-        id: 'living-curtain',
-        name: '커튼',
-        type: 'curtain',
-        isOpen: false,
-        entity_id: 'cover.living_room_curtain', // TODO: 실제 ID로 교체
-      },
-      {
-        id: 'living-tv',
-        name: 'LG TV',
-        type: 'tv',
-        isOn: false,
-        volume: 20,
-        entity_id: 'media_player.lg_tv', // TODO: 실제 ID로 교체
-      },
-      {
-        id: 'living-plug',
-        name: '스마트 플러그',
-        type: 'switch',
-        isOn: false,
-        entity_id: 'switch.living_room_plug', // TODO: 실제 ID로 교체
-      },
-    ],
-  },
-  {
-    id: 'bedroom',
-    name: '침실',
-    devices: [
-      {
-        id: 'bedroom-light',
-        name: '조명',
-        type: 'light',
-        isOn: false,
-        brightness: 60,
-        entity_id: 'light.bedroom_main', // TODO: 실제 ID로 교체
-      },
-      {
-        id: 'bedroom-heat',
-        name: '난방',
-        type: 'climate',
-        isOn: false,
-        targetTemperature: 22,
-        entity_id: 'climate.bedroom_heat', // TODO: 실제 ID로 교체
-      },
-      {
-        id: 'bedroom-blind',
-        name: '블라인드',
-        type: 'curtain',
-        isOpen: false,
-        entity_id: 'cover.bedroom_blind', // TODO: 실제 ID로 교체
+        entity_id: 'light.lumi_n_beacon_a60_9w_rgb_cct',
       },
     ],
   },
@@ -95,35 +27,18 @@ const ROOMS: Room[] = [
     name: '기타',
     devices: [
       {
-        id: 'kitchen-light',
-        name: '주방 조명',
-        type: 'light',
-        isOn: false,
-        brightness: 100,
-        entity_id: 'light.kitchen', // TODO: 실제 ID로 교체
-      },
-      {
-        id: 'bathroom-light',
-        name: '욕실 조명',
-        type: 'light',
-        isOn: false,
-        brightness: 100,
-        entity_id: 'light.bathroom', // TODO: 실제 ID로 교체
-      },
-      {
-        id: 'entrance-light',
-        name: '현관 조명',
-        type: 'light',
-        isOn: false,
-        brightness: 70,
-        entity_id: 'light.entrance', // TODO: 실제 ID로 교체
-      },
-      {
         id: 'robot-vacuum',
         name: '로봇 청소기',
         type: 'vacuum',
         vacuumState: 'docked',
-        entity_id: 'vacuum.robot', // TODO: 실제 ID로 교체
+        entity_id: 'vacuum.ace_arc_312',
+      },
+      {
+        id: 'vacuum-dnd',
+        name: '방해 금지',
+        type: 'switch',
+        isOn: false,
+        entity_id: 'switch.ace_arc_312_do_not_disturb',
       },
     ],
   },
