@@ -1,5 +1,6 @@
-const HA_URL = import.meta.env.VITE_HA_URL ?? 'http://localhost:8123'
-const HA_TOKEN = import.meta.env.VITE_HA_TOKEN ?? ''
+// HA 직접 호출 대신 gateway 프록시를 통해 CORS 우회
+const HA_URL = `${import.meta.env.VITE_GATEWAY_URL ?? 'http://localhost:3000'}/ha-proxy`
+const HA_TOKEN = ''  // gateway가 토큰 처리
 
 export interface HAState {
   entity_id: string
