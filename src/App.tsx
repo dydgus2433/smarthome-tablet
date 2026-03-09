@@ -18,7 +18,7 @@ const ROOMS: Room[] = [
         brightness: 80,
         supportsBrightness: true,
         supportsColor: true,
-        entity_id: 'light.lumi_n_beacon_a60_9w_rgb_cct',
+        entity_id: 'light.sigtagdeung',
       },
     ],
   },
