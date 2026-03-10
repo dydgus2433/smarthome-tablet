@@ -12,13 +12,67 @@ const ROOMS: Room[] = [
     devices: [
       {
         id: 'living-light-main',
-        name: 'LUMI-N 조명',
+        name: '거실등',
+        type: 'light',
+        isOn: false,
+        entity_id: 'light.geosildeung_geosil',
+      },
+      {
+        id: 'living-light-kitchen',
+        name: '주방등',
+        type: 'light',
+        isOn: false,
+        entity_id: 'light.geosildeung_jubang',
+      },
+      {
+        id: 'living-light-veranda',
+        name: '베란다등',
+        type: 'light',
+        isOn: false,
+        entity_id: 'light.geosildeung_beranda',
+      },
+      {
+        id: 'living-light-sigtak',
+        name: '식탁등',
         type: 'light',
         isOn: false,
         brightness: 80,
         supportsBrightness: true,
         supportsColor: true,
         entity_id: 'light.sigtagdeung',
+      },
+    ],
+  },
+  {
+    id: 'bedroom',
+    name: '침실',
+    devices: [
+      {
+        id: 'bedroom-light',
+        name: '안방등',
+        type: 'light',
+        isOn: false,
+        entity_id: 'light.anbangdeung',
+      },
+    ],
+  },
+  {
+    id: 'bathroom',
+    name: '화장실',
+    devices: [
+      {
+        id: 'bathroom-light',
+        name: '화장실등',
+        type: 'light',
+        isOn: false,
+        entity_id: 'light.hwajangsildeung_jomyeong',
+      },
+      {
+        id: 'bathroom-fan',
+        name: '환풍기',
+        type: 'light',
+        isOn: false,
+        entity_id: 'light.hwajangsildeung_fan',
       },
     ],
   },
