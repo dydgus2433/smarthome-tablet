@@ -1,9 +1,11 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 const STATIONS = [
   { id: 'kbs1radio', name: 'KBS 1라디오', desc: '조정식입니다', channelCode: 21 },
   { id: 'kbs2fm', name: 'KBS 2FM', desc: '효정의 볼륨을 높여요', channelCode: 25 },
 ]
+
+const REFRESH_INTERVAL_MS = 4 * 60 * 1000 // 4분마다 갱신 (토큰 5분 만료 전)
 
 async function fetchStreamUrl(channelCode: number): Promise<string> {
   const res = await fetch(
@@ -20,29 +22,51 @@ export function RadioPlayer() {
   const [activeId, setActiveId] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
+  const activeChannelCodeRef = useRef<number | null>(null)
+  const refreshTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const refreshUrl = useCallback(async () => {
+    const channelCode = activeChannelCodeRef.current
+    const audio = audioRef.current
+    if (!channelCode || !audio) return
+    try {
+      const url = await fetchStreamUrl(channelCode)
+      if (url) {
+        const currentTime = audio.currentTime
+        audio.src = url
+        audio.currentTime = currentTime
+        audio.play()
+      }
+    } catch {
+      // 갱신 실패 시 무시
+    }
+  }, [])
 
   useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
-    const handleEnded = () => setPlaying(false)
-    audio.addEventListener('ended', handleEnded)
-    return () => audio.removeEventListener('ended', handleEnded)
+    return () => {
+      if (refreshTimerRef.current) clearInterval(refreshTimerRef.current)
+    }
   }, [])
 
   async function play(station: typeof STATIONS[0]) {
     if (activeId === station.id && playing) {
       audioRef.current?.pause()
       setPlaying(false)
+      activeChannelCodeRef.current = null
+      if (refreshTimerRef.current) clearInterval(refreshTimerRef.current)
       return
     }
     setLoading(true)
     try {
       const url = await fetchStreamUrl(station.channelCode)
       if (audioRef.current && url) {
+        if (refreshTimerRef.current) clearInterval(refreshTimerRef.current)
         audioRef.current.src = url
         await audioRef.current.play()
         setActiveId(station.id)
         setPlaying(true)
+        activeChannelCodeRef.current = station.channelCode
+        refreshTimerRef.current = setInterval(refreshUrl, REFRESH_INTERVAL_MS)
       }
     } finally {
       setLoading(false)
@@ -53,6 +77,8 @@ export function RadioPlayer() {
     audioRef.current?.pause()
     setPlaying(false)
     setActiveId(null)
+    activeChannelCodeRef.current = null
+    if (refreshTimerRef.current) clearInterval(refreshTimerRef.current)
   }
 
   return (
