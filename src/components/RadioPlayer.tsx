@@ -67,6 +67,17 @@ export function RadioPlayer() {
         setPlaying(true)
         activeChannelCodeRef.current = station.channelCode
         refreshTimerRef.current = setInterval(refreshUrl, REFRESH_INTERVAL_MS)
+
+        // 백그라운드 재생 등록
+        if ('mediaSession' in navigator) {
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: station.name,
+            artist: station.desc,
+            album: 'KBS 라디오',
+          })
+          navigator.mediaSession.setActionHandler('pause', stop)
+          navigator.mediaSession.setActionHandler('play', () => audioRef.current?.play())
+        }
       }
     } finally {
       setLoading(false)
