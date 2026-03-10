@@ -39,7 +39,7 @@ const ROOMS: Room[] = [
         brightness: 80,
         supportsBrightness: true,
         supportsColor: true,
-        entity_id: 'light.sigtagdeung',
+        entity_id: 'light.sigtagdeung_2',
       },
     ],
   },
