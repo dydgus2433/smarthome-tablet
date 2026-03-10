@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { RoomTab } from './components/RoomTab'
 import { SceneControl } from './components/SceneControl'
+import { RadioPlayer } from './components/RadioPlayer'
 import { useHAStates } from './hooks/useHAStates'
 import { useHAConnection } from './hooks/useHAConnection'
 import type { Room } from './types'
@@ -140,6 +141,8 @@ export default function App() {
         />
       </main>
 
+      {/* 라디오 플레이어 — 하단 고정 */}
+      <RadioPlayer />
       {/* 씬 버튼 — 하단 고정 */}
       <SceneControl />
     </div>
