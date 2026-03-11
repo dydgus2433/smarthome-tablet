@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDirectControl } from '../hooks/useDirectControl'
-import { lightOn, lightOff, lightSetColorTemp } from '../api/homeassistant'
+import { lightOn, lightOff, lightSetColorTemp, switchOn, switchOff } from '../api/homeassistant'
 import type { Device } from '../types'
 import { StatusRing } from './StatusRing'
 
@@ -15,11 +15,17 @@ export function LightControl({ device }: Props) {
   const [colorTemp, setColorTemp] = useState(device.colorTemp ?? 300)
   const eid = device.entity_id
 
+  const isSwitch = eid?.startsWith('switch.')
+
   const toggle = async () => {
     if (!eid) return
     const next = !isOn
     setIsOn(next)
-    await call(() => next ? lightOn(eid, device.supportsBrightness ? brightness : undefined) : lightOff(eid))
+    if (isSwitch) {
+      await call(() => next ? switchOn(eid) : switchOff(eid))
+    } else {
+      await call(() => next ? lightOn(eid, device.supportsBrightness ? brightness : undefined) : lightOff(eid))
+    }
   }
 
   const changeBrightness = async (val: number) => {
