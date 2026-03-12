@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDirectControl } from '../hooks/useDirectControl'
 import { lightOn, lightOff, lightSetColorTemp, switchOn, switchOff } from '../api/homeassistant'
 import type { Device } from '../types'
@@ -13,6 +13,10 @@ export function LightControl({ device }: Props) {
   const [isOn, setIsOn] = useState(device.isOn ?? false)
   const [brightness, setBrightness] = useState(device.brightness ?? 80)
   const [colorTemp, setColorTemp] = useState(device.colorTemp ?? 300)
+
+  useEffect(() => { setIsOn(device.isOn ?? false) }, [device.isOn])
+  useEffect(() => { if (device.brightness !== undefined) setBrightness(device.brightness) }, [device.brightness])
+  useEffect(() => { if (device.colorTemp !== undefined) setColorTemp(device.colorTemp) }, [device.colorTemp])
   const eid = device.entity_id
 
   const isSwitch = eid?.startsWith('switch.')

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { RoomTab } from './components/RoomTab'
 import { SceneControl } from './components/SceneControl'
-import { RadioPlayer } from './components/RadioPlayer'
 import { useHAStates } from './hooks/useHAStates'
 import { useHAConnection } from './hooks/useHAConnection'
 import { ButtonGuide } from './components/ButtonGuide'
@@ -111,7 +110,7 @@ const ROOMS: Room[] = [
         name: '로봇 청소기',
         type: 'vacuum',
         vacuumState: 'docked',
-        entity_id: 'vacuum.ace_arc_312',
+        entity_id: 'select.ace_arc_312_mode',
       },
       {
         id: 'vacuum-dnd',
@@ -157,23 +156,22 @@ export default function App() {
 
       {/* 방 탭 + 기기 그리드 */}
       <main className="flex-1 p-6 overflow-hidden relative">
-        {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-slate-900/70 z-10 rounded-xl">
+        {loading ? (
+          <div className="absolute inset-0 flex items-center justify-center">
             <div className="flex flex-col items-center gap-3">
               <div className="w-8 h-8 border-2 border-slate-600 border-t-slate-300 rounded-full animate-spin" />
               <p className="text-sm text-slate-400">기기 상태 불러오는 중...</p>
             </div>
           </div>
+        ) : (
+          <RoomTab
+            rooms={rooms}
+            activeRoom={activeRoom}
+            onRoomChange={setActiveRoom}
+          />
         )}
-        <RoomTab
-          rooms={rooms}
-          activeRoom={activeRoom}
-          onRoomChange={setActiveRoom}
-        />
       </main>
 
-      {/* 라디오 플레이어 — 하단 고정 */}
-      <RadioPlayer />
       {/* 씬 버튼 — 하단 고정 */}
       <SceneControl onSceneDone={refresh} />
     </div>

@@ -24,9 +24,11 @@ function applyHAState(device: Device, state: string, attributes: Record<string, 
     return { ...device, isOn: state === 'on' }
   }
   if (device.type === 'vacuum') {
-    return { ...device, vacuumState: state as import('../types').VacuumState }
+    // ACE ARC 312: select 엔티티 모드로 상태 추정
+    const vacuumState = state === 'chargego' ? 'returning' : 'docked'
+    return { ...device, vacuumState }
   }
-  if (device.type === 'tv') {
+  if (device.type === 'tv' || device.type === 'tv_ir') {
     const isOn = state !== 'off' && state !== 'unavailable'
     const rawVolume = attributes.volume_level as number | undefined
     const volume = rawVolume !== undefined ? Math.round(rawVolume * 100) : device.volume

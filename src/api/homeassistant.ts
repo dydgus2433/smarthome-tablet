@@ -93,17 +93,18 @@ export function switchOff(entity_id: string): Promise<void> {
   return callService('switch', 'turn_off', { entity_id })
 }
 
-// 로봇 청소기
-export function vacuumStart(entity_id: string): Promise<void> {
-  return callService('vacuum', 'start', { entity_id })
+// 셀렉트
+export function selectOption(entity_id: string, option: string): Promise<void> {
+  return callService('select', 'select_option', { entity_id, option })
 }
 
-export function vacuumPause(entity_id: string): Promise<void> {
-  return callService('vacuum', 'pause', { entity_id })
+// 로봇 청소기 (ACE ARC 312: select.ace_arc_312_mode 제어)
+export function vacuumStart(entity_id: string): Promise<void> {
+  return selectOption(entity_id, 'smart')
 }
 
 export function vacuumReturnToBase(entity_id: string): Promise<void> {
-  return callService('vacuum', 'return_to_base', { entity_id })
+  return selectOption(entity_id, 'chargego')
 }
 
 // HA 스크립트

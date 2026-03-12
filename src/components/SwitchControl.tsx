@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDirectControl } from '../hooks/useDirectControl'
 import { switchOn, switchOff } from '../api/homeassistant'
 import type { Device } from '../types'
@@ -12,6 +12,8 @@ export function SwitchControl({ device }: Props) {
   const { status, call } = useDirectControl()
   const [isOn, setIsOn] = useState(device.isOn ?? false)
   const eid = device.entity_id
+
+  useEffect(() => { setIsOn(device.isOn ?? false) }, [device.isOn])
 
   const toggle = async () => {
     if (!eid) return

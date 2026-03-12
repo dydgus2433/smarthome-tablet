@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDirectControl } from '../hooks/useDirectControl'
-import { vacuumStart, vacuumPause, vacuumReturnToBase } from '../api/homeassistant'
+import { vacuumStart, vacuumReturnToBase } from '../api/homeassistant'
 import type { Device, VacuumState } from '../types'
 import { StatusRing } from './StatusRing'
 
@@ -31,16 +31,12 @@ export function VacuumControl({ device }: Props) {
   const [vacuumState, setVacuumState] = useState<VacuumState>(device.vacuumState ?? 'docked')
   const eid = device.entity_id
 
+  useEffect(() => { if (device.vacuumState) setVacuumState(device.vacuumState) }, [device.vacuumState])
+
   const start = async () => {
     if (!eid) return
     setVacuumState('cleaning')
     await call(() => vacuumStart(eid))
-  }
-
-  const pause = async () => {
-    if (!eid) return
-    setVacuumState('paused')
-    await call(() => vacuumPause(eid))
   }
 
   const returnToBase = async () => {
@@ -69,22 +65,14 @@ export function VacuumControl({ device }: Props) {
         </StatusRing>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 gap-2">
         <button
           onClick={start}
           disabled={!eid || isCleaning || status === 'loading'}
           className="py-3 rounded-xl bg-teal-500 text-white font-semibold text-sm
             disabled:opacity-30 active:scale-95 transition-all"
         >
-          청소
-        </button>
-        <button
-          onClick={pause}
-          disabled={!eid || !isCleaning || status === 'loading'}
-          className="py-3 rounded-xl bg-yellow-500 text-slate-900 font-semibold text-sm
-            disabled:opacity-30 active:scale-95 transition-all"
-        >
-          정지
+          청소 시작
         </button>
         <button
           onClick={returnToBase}

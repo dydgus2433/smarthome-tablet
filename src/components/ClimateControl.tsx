@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDirectControl } from '../hooks/useDirectControl'
 import { climateTurnOn, climateTurnOff, climateSetTemp } from '../api/homeassistant'
 import type { Device } from '../types'
@@ -13,6 +13,9 @@ export function ClimateControl({ device }: Props) {
   const [isOn, setIsOn] = useState(device.isOn ?? false)
   const [temp, setTemp] = useState(device.targetTemperature ?? 24)
   const eid = device.entity_id
+
+  useEffect(() => { setIsOn(device.isOn ?? false) }, [device.isOn])
+  useEffect(() => { if (device.targetTemperature !== undefined) setTemp(device.targetTemperature) }, [device.targetTemperature])
 
   const toggle = async () => {
     if (!eid) return

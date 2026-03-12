@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDirectControl } from '../hooks/useDirectControl'
 import { coverOpen, coverClose } from '../api/homeassistant'
 import type { Device } from '../types'
@@ -12,6 +12,8 @@ export function CurtainControl({ device }: Props) {
   const { status, call } = useDirectControl()
   const [isOpen, setIsOpen] = useState(device.isOpen ?? false)
   const eid = device.entity_id
+
+  useEffect(() => { setIsOpen(device.isOpen ?? false) }, [device.isOpen])
 
   const control = async (open: boolean) => {
     if (!eid) return
