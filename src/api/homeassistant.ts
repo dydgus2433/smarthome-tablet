@@ -106,6 +106,11 @@ export function vacuumReturnToBase(entity_id: string): Promise<void> {
   return callService('vacuum', 'return_to_base', { entity_id })
 }
 
+// HA 스크립트
+export function scriptRun(script_id: string): Promise<void> {
+  return callService('script', script_id, {})
+}
+
 // TV (media_player)
 export function tvTurnOn(entity_id: string): Promise<void> {
   return callService('media_player', 'turn_on', { entity_id })
@@ -117,4 +122,43 @@ export function tvTurnOff(entity_id: string): Promise<void> {
 
 export function tvSetVolume(entity_id: string, volume: number): Promise<void> {
   return callService('media_player', 'volume_set', { entity_id, volume_level: volume / 100 })
+}
+
+export function tvVolumeUp(entity_id: string): Promise<void> {
+  return callService('media_player', 'volume_up', { entity_id })
+}
+
+export function tvVolumeDown(entity_id: string): Promise<void> {
+  return callService('media_player', 'volume_down', { entity_id })
+}
+
+export function tvMute(entity_id: string): Promise<void> {
+  return callService('media_player', 'volume_mute', { entity_id, is_volume_muted: true })
+}
+
+export function tvSelectSource(entity_id: string, source: string): Promise<void> {
+  return callService('media_player', 'select_source', { entity_id, source })
+}
+
+export function tvChannelUp(entity_id: string): Promise<void> {
+  return callService('media_player', 'media_next_track', { entity_id })
+}
+
+export function tvChannelDown(entity_id: string): Promise<void> {
+  return callService('media_player', 'media_previous_track', { entity_id })
+}
+
+export function tvPlayPause(entity_id: string): Promise<void> {
+  return callService('media_player', 'media_play_pause', { entity_id })
+}
+
+export function tvWakeOnLan(): Promise<void> {
+  return fetch(
+    `${import.meta.env.VITE_GATEWAY_URL ?? 'http://localhost:3000'}/ha-proxy/api/services/wake_on_lan/send_magic_packet`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mac: 'a4:ce:da:66:d4:2e' }),
+    },
+  ).then(res => { if (!res.ok) throw new Error('WOL 실패') })
 }

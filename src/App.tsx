@@ -4,6 +4,7 @@ import { SceneControl } from './components/SceneControl'
 import { RadioPlayer } from './components/RadioPlayer'
 import { useHAStates } from './hooks/useHAStates'
 import { useHAConnection } from './hooks/useHAConnection'
+import { ButtonGuide } from './components/ButtonGuide'
 import type { Room } from './types'
 
 const ROOMS: Room[] = [
@@ -39,6 +40,26 @@ const ROOMS: Room[] = [
         isOn: false,
         entity_id: 'switch.geosil_light_center',
       },
+      {
+        id: 'living-tv',
+        name: '거실 TV',
+        type: 'tv_ir',
+        isOn: false,
+        entity_id: 'media_player.lg_webos_tv_oled65a1sna',
+      },
+      {
+        id: 'living-curtain',
+        name: '거실 커튼',
+        type: 'curtain',
+        isOpen: false,
+        entity_id: 'cover.geisul_curtain',
+      },
+      {
+        id: 'living-ac',
+        name: '에어컨',
+        type: 'ac_ir',
+        isOn: false,
+      },
     ],
   },
   {
@@ -51,6 +72,13 @@ const ROOMS: Room[] = [
         type: 'light',
         isOn: false,
         entity_id: 'switch.anbang_light',
+      },
+      {
+        id: 'bedroom-curtain',
+        name: '안방 커튼',
+        type: 'curtain',
+        isOpen: false,
+        entity_id: 'cover.anbang_curtain',
       },
     ],
   },
@@ -98,7 +126,7 @@ const ROOMS: Room[] = [
 
 export default function App() {
   const [activeRoom, setActiveRoom] = useState('living')
-  const { rooms, loading } = useHAStates(ROOMS)
+  const { rooms, loading, refresh } = useHAStates(ROOMS)
   const connected = useHAConnection()
 
   return (
@@ -109,7 +137,9 @@ export default function App() {
           <h1 className="text-xl font-bold tracking-tight">스마트홈</h1>
           <p className="text-xs text-slate-400 mt-0.5">홈 컨트롤 패널</p>
         </div>
-        <div className="flex items-center gap-2 text-xs">
+        <div className="flex items-center gap-3">
+          <ButtonGuide />
+          <div className="flex items-center gap-2 text-xs">
           {connected ? (
             <>
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse inline-block" />
@@ -121,6 +151,7 @@ export default function App() {
               <span className="text-red-400">연결 끊김</span>
             </>
           )}
+          </div>
         </div>
       </header>
 
@@ -144,7 +175,7 @@ export default function App() {
       {/* 라디오 플레이어 — 하단 고정 */}
       <RadioPlayer />
       {/* 씬 버튼 — 하단 고정 */}
-      <SceneControl />
+      <SceneControl onSceneDone={refresh} />
     </div>
   )
 }

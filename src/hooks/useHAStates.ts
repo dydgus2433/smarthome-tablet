@@ -35,9 +35,10 @@ function applyHAState(device: Device, state: string, attributes: Record<string, 
   return device
 }
 
-export function useHAStates(initialRooms: Room[]): { rooms: Room[]; loading: boolean } {
+export function useHAStates(initialRooms: Room[]): { rooms: Room[]; loading: boolean; refresh: () => void } {
   const [rooms, setRooms] = useState<Room[]>(initialRooms)
   const [loading, setLoading] = useState(true)
+  const [tick, setTick] = useState(0)
 
   useEffect(() => {
     let cancelled = false
@@ -67,7 +68,9 @@ export function useHAStates(initialRooms: Room[]): { rooms: Room[]; loading: boo
 
     fetchAll()
     return () => { cancelled = true }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [tick]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  return { rooms, loading }
+  const refresh = () => setTick(t => t + 1)
+
+  return { rooms, loading, refresh }
 }

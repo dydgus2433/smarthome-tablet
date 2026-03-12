@@ -1,4 +1,4 @@
-export type DeviceType = 'light' | 'climate' | 'curtain' | 'switch' | 'vacuum' | 'tv'
+export type DeviceType = 'light' | 'climate' | 'curtain' | 'switch' | 'vacuum' | 'tv' | 'ac_ir' | 'tv_ir'
 
 export type VacuumState = 'cleaning' | 'docked' | 'idle' | 'paused' | 'returning' | 'error'
 
