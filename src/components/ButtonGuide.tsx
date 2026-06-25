@@ -5,7 +5,7 @@ const BUTTONS = [
     label: '버튼 1',
     color: 'text-blue-400',
     actions: [
-      { type: '단클릭', desc: '❄️ 에어컨 토글' },
+      { type: '단클릭', desc: '💡 식탁등 토글' },
       { type: '더블클릭', desc: '🍽 식사 모드' },
       { type: '롱프레스', desc: '🌅 기상 모드' },
     ],
@@ -14,8 +14,8 @@ const BUTTONS = [
     label: '버튼 2',
     color: 'text-emerald-400',
     actions: [
-      { type: '단클릭', desc: '🛏 안방커튼 토글' },
-      { type: '더블클릭', desc: '🪟 거실커튼 토글' },
+      { type: '단클릭', desc: '🪟 거실커튼 토글' },
+      { type: '더블클릭', desc: '🛏 안방커튼 토글' },
       { type: '롱프레스', desc: '🌙 잘자 모드' },
     ],
   },
@@ -23,7 +23,7 @@ const BUTTONS = [
     label: '버튼 3',
     color: 'text-amber-400',
     actions: [
-      { type: '단클릭', desc: '💡 전체 조명 토글' },
+      { type: '단클릭', desc: '❄️ 에어컨 토글' },
       { type: '더블클릭', desc: '🚪 외출 모드' },
       { type: '롱프레스', desc: '🎬 영화 모드' },
     ],

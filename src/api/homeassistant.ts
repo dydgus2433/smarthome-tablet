@@ -75,13 +75,22 @@ export function climateTurnOff(entity_id: string): Promise<void> {
   return callService('climate', 'turn_off', { entity_id })
 }
 
-// 커튼/블라인드
+// 커튼/블라인드 (position 0 = 물리적 열림, 100 = 물리적 닫힘)
 export function coverOpen(entity_id: string): Promise<void> {
-  return callService('cover', 'open_cover', { entity_id })
+  return callService('cover', 'set_cover_position', { entity_id, position: 0 })
 }
 
 export function coverClose(entity_id: string): Promise<void> {
-  return callService('cover', 'close_cover', { entity_id })
+  return callService('cover', 'set_cover_position', { entity_id, position: 100 })
+}
+
+// input_boolean
+export function inputBooleanTurnOn(entity_id: string): Promise<void> {
+  return callService('input_boolean', 'turn_on', { entity_id })
+}
+
+export function inputBooleanTurnOff(entity_id: string): Promise<void> {
+  return callService('input_boolean', 'turn_off', { entity_id })
 }
 
 // 스위치/스마트 플러그

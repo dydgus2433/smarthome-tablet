@@ -52,6 +52,7 @@ const ROOMS: Room[] = [
         type: 'curtain',
         isOpen: false,
         entity_id: 'cover.geisul_curtain',
+        booleanEntityId: 'input_boolean.geisul_curtain_state',
       },
       {
         id: 'living-ac',
@@ -78,6 +79,7 @@ const ROOMS: Room[] = [
         type: 'curtain',
         isOpen: false,
         entity_id: 'cover.anbang_curtain',
+        booleanEntityId: 'input_boolean.anbang_curtain_state',
       },
     ],
   },

@@ -17,7 +17,8 @@ function applyHAState(device: Device, state: string, attributes: Record<string, 
     return { ...device, isOn, targetTemperature, temperature }
   }
   if (device.type === 'curtain') {
-    const isOpen = state === 'open'
+    // 커튼 모터 방향이 물리적으로 반전되어 있어 open/closed 스왑
+    const isOpen = state === 'closed'
     return { ...device, isOpen }
   }
   if (device.type === 'switch') {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useDirectControl } from '../hooks/useDirectControl'
-import { coverOpen, coverClose } from '../api/homeassistant'
+import { coverOpen, coverClose, inputBooleanTurnOn, inputBooleanTurnOff } from '../api/homeassistant'
 import type { Device } from '../types'
 import { StatusRing } from './StatusRing'
 
@@ -18,7 +18,11 @@ export function CurtainControl({ device }: Props) {
   const control = async (open: boolean) => {
     if (!eid) return
     setIsOpen(open)
-    await call(() => open ? coverOpen(eid) : coverClose(eid))
+    const beid = device.booleanEntityId
+    await call(async () => {
+      await (open ? coverClose(eid) : coverOpen(eid))
+      if (beid) await (open ? inputBooleanTurnOn(beid) : inputBooleanTurnOff(beid))
+    })
   }
 
   return (

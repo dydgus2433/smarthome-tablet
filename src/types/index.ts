@@ -32,6 +32,8 @@ export interface Device {
   targetTemperature?: number
   /** 커튼: 열림 여부 */
   isOpen?: boolean
+  /** 커튼: 상태 추적용 input_boolean entity_id */
+  booleanEntityId?: string
   /** TV: 볼륨 0~100 */
   volume?: number
   /** 청소기: 현재 상태 */
